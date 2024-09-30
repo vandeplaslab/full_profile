@@ -1,6 +1,6 @@
 from typing import *
 from joblib import Parallel, delayed
-from mch import svt
+from full_profile import svt
 from unipy import *
 import contextlib
 from tqdm import tqdm
