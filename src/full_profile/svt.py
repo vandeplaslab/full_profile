@@ -46,8 +46,6 @@ class SVT:
         self.kwargs = kwargs
         self.tic = 0
 
-        pass
-
     @property
     def b(self) -> uty.Array:
         """Reconstruct b (low-rank component) from svd components.
@@ -86,7 +84,6 @@ class SVT:
     def _datatype(self, dtype: str) -> str:
         """Returns datatype and promotes if required."""
         dtype = dtype if dtype not in ["int8", "int16", "int32", "int64"] else "float32"
-
         return dtype
 
     def initialize(self, a: uty.Array) -> None:
