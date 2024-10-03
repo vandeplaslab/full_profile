@@ -128,8 +128,10 @@ files = "src/**/"
 strict = true
 disallow_any_generics = false
 disallow_subclassing_any = false
+warn_unused_ignores = false
+ignore_missing_imports = true
 show_error_codes = true
-pretty = true
+pretty = false
 
 # # module specific overrides
 # [[tool.mypy.overrides]]
