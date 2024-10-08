@@ -2,7 +2,7 @@
 
 BioRxiv: [https://www.biorxiv.org/content/10.1101/2024.09.30.614425v1](https://www.biorxiv.org/content/10.1101/2024.09.30.614425v1)
 
-In-house dependencies: [https://github.com/vandeplaslab/full_profile/blob/main/imzy](imzy) and [https://github.com/vandeplaslab/full_profile/blob/main/unipy](UniPy)
+In-house dependencies: [https://github.com/vandeplaslab/imzy](imzy) and [https://github.com/vandeplaslab/full_profile/blob/main/unipy](UniPy)
 
 ## Download and Unpack Data
 DOI: [https://doi.org/10.4121/a6efd47a-b4ec-493e-a742-70e8a369f788](https://doi.org/10.4121/a6efd47a-b4ec-493e-a742-70e8a369f788)
