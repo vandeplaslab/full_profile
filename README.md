@@ -132,7 +132,7 @@ B *= C_sp # Apply normalization
 
 
 ### SVT
-Example of how to now apply singular value thresholding.
+Example of how to apply singular value thresholding algorithm.
 ```Python
 from full_profile import svt
 inst = svt.svt(maxiter=100, tau_factor=1e-2, delta=1, method='scipy_gesdd', dense=True, verbose=True)
@@ -149,6 +149,7 @@ This line creates an instance of the SVT (likely "Singular Value Thresholding") 
 - ```verbose=True```: Enables verbose output
 
 ### FPC
+Example of how to apply the fixed point continuation algorithm.
 ```Python
 from full_profile import fpc
 inst = fpc.fpc(maxiter=100, tau_factor=1e-3, delta=1.4, method='arpack', verbose=True)
