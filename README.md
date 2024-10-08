@@ -46,7 +46,7 @@ B = scis.csc_matrix(out, dtype='float32', copy=False)
 ```
 
 When B (in a dense format) is too large to fit in memory, one can use the following
-```
+```python
 import numpy as np
 import scipy.sparse as scis
 from imzy import get_reader
