@@ -2,8 +2,7 @@
 
 BioRxiv: [https://www.biorxiv.org/content/10.1101/2024.09.30.614425v1](https://www.biorxiv.org/content/10.1101/2024.09.30.614425v1)
 
-In-house Dependencies: imzy and UniPy
-
+In-house dependencies: imzy and UniPy
 
 ## Download and Unpack Data
 DOI: [https://doi.org/10.4121/a6efd47a-b4ec-493e-a742-70e8a369f788](https://doi.org/10.4121/a6efd47a-b4ec-493e-a742-70e8a369f788)
@@ -171,3 +170,6 @@ from full_profile import dfc
 inst = dfc.dfc(maxiter=100, tau_factor=1e-3, delta=1.4, method='arpack', verbose=True)
 inst.run(B)
 ```
+
+## Latest News
+2024/10/04: we are working hard to make UniPy available along with the DFC implementation
