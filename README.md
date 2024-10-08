@@ -24,8 +24,8 @@ Given the 100+ GB data set size of the qTOF in compressed format, we need to gat
 cat xa* | tar xfz -
 ```
 
-## From .d to NumPy Array
-- Put code here on how to get to our format
+## From .d to NumPy Array / SciPy Sparse Array
+Use our favorite toolbox for this, e.g. [https://github.com/vandeplaslab/imzy](imzy)
 
 ## Applying Methods
 - Include preprocessing (5%-95% TIC normalization)
