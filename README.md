@@ -15,13 +15,13 @@ There are 2 data sets: (1) FT-ICR (fticr_data.tar.gz), (2) qTOF (all other files
 ### FT-ICR
 Unpack data
 ```
-tar -xf fticr_data.tar.gz -C fticr_data
+tar -xfz fticr_data.tar.gz -C fticr_data
 ```
 
 ### qTOF
 Given the 100+ GB data set size of the qTOF in compressed format, we need to gather all differnt split files (4GB each) to unpack the whole folder.
 ```
-cat xa* | tar xvfz -
+cat xa* | tar xfz -
 ```
 
 ## From .d to NumPy Array
