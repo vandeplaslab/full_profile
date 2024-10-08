@@ -42,7 +42,7 @@ for k, i in enumerate(reader.framelist):
     f = reader[i]._init_csc()
     out[f.indices, k] = f.data    
     
-B = scis.csc_matrix(out, dtype='float32')
+B = scis.csc_matrix(out, dtype='float32', copy=False)
 ```
 
 ## Applying Methods
