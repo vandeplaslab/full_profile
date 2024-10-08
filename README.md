@@ -16,10 +16,14 @@ tar -xf fticr_data.tar.gz -C fticr_data
 ```
 
 ## qTOF
+Given the 100+ GB data set size of the qTOF in compressed format, we need to gather all differnt split files (4GB each) to unpack the whole folder.
 ```
 cat xa* | tar xvfz -
 ```
 
 # From .d to NumPy Array
+- Maybe put some code here on how to get to our format
 
 # Applying Methods
+- Include preprocessing (5%-95% TIC normalization)
+- Examples on how to apply
