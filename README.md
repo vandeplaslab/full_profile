@@ -85,9 +85,13 @@ B = scis.csc_matrix((b_data, b_indices, b_indptr), copy=False)
 
 
 ## Download and Installing Package
-% Under construction %
+Get the latest package version, e.g. through GitHub CLI (https://cli.github.com/)
 ```
-get | cd intall
+gh repo clone vandeplaslab/full_profile
+```
+Install package (e.g. through pip) and get required dependencies (first ```cd``` into the full_profile folder)
+```
+pip install -e .[dev]
 ```
 
 ## Applying Methods
