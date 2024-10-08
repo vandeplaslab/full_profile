@@ -27,6 +27,24 @@ cat xa* | tar xfz -
 ## From .d to NumPy Array / SciPy Sparse Array
 Use our favorite toolbox for this, e.g. [https://github.com/vandeplaslab/imzy](imzy)
 
+
+```python
+import numpy as np
+import scipy.sparse as scis
+from imzy import get_reader
+
+path = "path/to/file"
+reader = get_reader(path)
+f = reader[0]
+out = np.zeros((reader.n_mz_bins, len(reader.framelist)), dtype=f.dtype)
+
+for k, i in enumerate(reader.framelist):
+    f = reader[i]._init_csc()
+    out[f.indices, k] = f.data    
+    
+B = scis.csc_matrix(out, dtype='float32')
+```
+
 ## Applying Methods
 - Include preprocessing (5%-95% TIC normalization)
 - Examples on how to apply
