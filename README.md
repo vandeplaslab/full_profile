@@ -132,11 +132,21 @@ B *= C_sp # Apply normalization
 
 
 ### SVT
+Example of how to now apply singular value thresholding.
 ```Python
 from full_profile import svt
-inst = svt.svt(100, r, tau_factor=1e-2, delta=1, method='scipy_gesdd', dense=True, verbose=True)
+inst = svt.svt(maxiter=100, tau_factor=1e-2, delta=1, method='scipy_gesdd', dense=True, verbose=True)
 inst.run(B)
 ```
+
+This line creates an instance of the SVT (likely "Singular Value Thresholding") class with the following parameters:
+
+- ```maxiter=100```: First positional argument is the maximal number of iterations 
+- ```tau_factor=1e-2```: Sets the tau factor to 0.01 (see Supplementary Materials)
+- ```delta=1```: Sets delta, i.e. step size, to 1 (see Supplementary Materials)
+- ```method='scipy_gesdd'```: Specifies the underlying svd method as 'scipy_gesdd' (multiple available see UniPy package)
+- ```dense=True```: Sets the dense flag to True if enough memory is available to reconstruct B into dense memory (a True statement speeds up the calculations)
+- ```verbose=True```: Enables verbose output
 
 ### FPC
 ```Python
@@ -144,8 +154,17 @@ from full_profile import fpc
 inst = fpc.fpc(maxiter=100, tau_factor=1e-3, delta=1.4, method='arpack', verbose=True)
 inst.run(B)
 ```
+This line creates an instance of the FPC (likely "Fixed Point Continuation") class with the following parameters:
+- ```maxiter=100```: First positional argument is the maximal number of iterations 
+- ```tau_factor=1e-2```: Sets the tau factor to 0.01 (see Supplementary Materials)
+- ```delta=1```: Sets delta, i.e. step size, to 1 (see Supplementary Materials)
+- ```method='scipy_gesdd'```: Specifies the underlying svd method as 'scipy_gesdd' (multiple available see UniPy package)
+- ```dense=True```: Sets the dense flag to True if enough memory is available to reconstruct B into dense memory (a True statement speeds up the calculations)
+- ```verbose=True```: Enables verbose output
+- 
 
 ### DFC
+% Under construction %
 ```Python
 from full_profile import dfc
 inst = dfc.dfc(maxiter=100, tau_factor=1e-3, delta=1.4, method='arpack', verbose=True)
