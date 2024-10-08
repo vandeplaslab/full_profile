@@ -90,7 +90,7 @@ gh repo clone vandeplaslab/full_profile
 ```
 Install package (e.g. through pip) and get required dependencies (first ```cd``` into the full_profile folder)
 ```
-pip install -e .[dev]
+pip install .
 ```
 
 ## Applying Methods
