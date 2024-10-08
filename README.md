@@ -95,8 +95,40 @@ pip install -e .[dev]
 ```
 
 ## Applying Methods
+Once the package is installed we can apply the paper methods onto data.
+
 ### Preprocessing
-We apply a 5-95% Total Ion Current Count (TIC) Normalization
+For our purposes, we first applied a 5-95% Total Ion Current Count (TIC) normalization (i.e. ```C```) on the raw data (see Supplementary Materials of paper). The method can be found here: [https://github.com/vandeplaslab/imzy/blob/add-norms/src/imzy/_normalizations/_extract.py](https://github.com/vandeplaslab/imzy/blob/add-norms/src/imzy/_normalizations/_extract.py) or we can apply it directly onto our sparse data by
+```python
+def calculate_normalizations_optimized(spectrum: np.ndarray) -> np.ndarray:
+    """Calculate various normalizations, optimized version.
+
+    This function expects a float32 spectrum.
+    """
+    # Filter positive values once and reuse
+    positive_spectrum = spectrum[spectrum > 0]
+
+    # Calculating quantiles once for all needed
+    if positive_spectrum.size > 1:
+        q95, q90, q10, q5 = np.nanquantile(positive_spectrum, [0.95, 0.9, 0.1, 0.05])
+    else:
+        q95, q90, q10, q5 = 0, 0, 0, 0
+
+    # Using logical indexing with boolean arrays might be faster due to numba optimization
+    condition_q95 = spectrum < q95
+    condition_q5 = spectrum > q5
+
+    return np.sum(spectrum[condition_q5 & condition_q95])  # 5-95% TIC
+
+C = np.zeros((B.shape[1],1))
+for i in range(B.shape[1]):
+    C[i] = calculate_normalizations_optimized(B[:,i].toarray())
+    print(i, 'of', B.shape[1], end='\r')
+
+C_sp = (1/(C/np.median(C)))  # Apply rescaler (np.median(C)) for ease of visualization
+ 
+B *= C_sp # Apply normalization
+```
 
 
 ### SVT
