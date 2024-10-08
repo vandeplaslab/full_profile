@@ -2,7 +2,7 @@
 
 BioRxiv: [https://www.biorxiv.org/content/10.1101/2024.09.30.614425v1](https://www.biorxiv.org/content/10.1101/2024.09.30.614425v1)
 
-Dependencies: this toolbox depends on a few other in-house toolboxes. i.e. unipy, pyspa and ...
+Dependencies: UniPy
 
 
 ## Download and Unpack Data
