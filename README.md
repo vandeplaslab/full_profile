@@ -24,7 +24,7 @@ cat xa* | tar xfz -
 ```
 
 ## From .d to NumPy Array / SciPy Sparse Array
-Use our favorite toolbox for this, e.g. [https://github.com/vandeplaslab/imzy](imzy)
+Use your favorite toolbox for this, e.g. [https://github.com/vandeplaslab/imzy](imzy)
 The code below provides a simple sample of code when B fits into memory (in a dense format).
 
 ```python
