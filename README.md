@@ -25,7 +25,7 @@ cat xa* | tar xfz -
 ```
 
 ## From .d to NumPy Array
-- Maybe put some code here on how to get to our format
+- Put code here on how to get to our format
 
 ## Applying Methods
 - Include preprocessing (5%-95% TIC normalization)
