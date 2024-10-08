@@ -45,16 +45,33 @@ for k, i in enumerate(reader.framelist):
 B = scis.csc_matrix(out, dtype='float32', copy=False)
 ```
 
+## Download and Installing Package
+```
+get | cd intall
+```
+
 ## Applying Methods
 ### Preprocessing
 We apply a 5-95% Total Ion Current Count (TIC) Normalization
 
 
 ### SVT
-- Example
+```Python
+from full_profile import svt
+inst = svt.svt(100, r, tau_factor=1e-2, delta=1, method='scipy_gesdd', dense=True, verbose=True)
+inst.run(B)
+```
 
 ### FPC
-- Example
+```Python
+from full_profile import fpc
+inst = fpc.fpc(maxiter=100, tau_factor=1e-3, delta=1.4, method='arpack', verbose=True)
+inst.run(B)
+```
 
 ### DFC
-- Example
+```Python
+from full_profile import dfc
+inst = dfc.dfc(maxiter=100, tau_factor=1e-3, delta=1.4, method='arpack', verbose=True)
+inst.run(B)
+```
