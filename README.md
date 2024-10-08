@@ -2,7 +2,7 @@
 
 BioRxiv: [https://www.biorxiv.org/content/10.1101/2024.09.30.614425v1](https://www.biorxiv.org/content/10.1101/2024.09.30.614425v1)
 
-In-House Dependencies: imzy and UniPy
+In-house Dependencies: imzy and UniPy
 
 
 ## Download and Unpack Data
@@ -46,7 +46,9 @@ B = scis.csc_matrix(out, dtype='float32', copy=False)
 ```
 
 ## Applying Methods
-### 5-95% Total Ion Current Count Normalization
+### Preprocessing
+We apply a 5-95% Total Ion Current Count (TIC) Normalization
+
 
 ### SVT
 - Example
