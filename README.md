@@ -26,6 +26,7 @@ cat xa* | tar xfz -
 
 ## From .d to NumPy Array / SciPy Sparse Array
 Use our favorite toolbox for this, e.g. [https://github.com/vandeplaslab/imzy](imzy)
+The code below provides a simple sample of code when B fits into memory (in a dense format).
 
 ```python
 import numpy as np
@@ -43,6 +44,45 @@ for k, i in enumerate(reader.framelist):
     
 B = scis.csc_matrix(out, dtype='float32', copy=False)
 ```
+
+When B (in a dense format) is too large to fit in memory, one can use the following
+```
+import numpy as np
+import scipy.sparse as scis
+from imzy import get_reader
+
+path = "path/to/file"
+reader = get_reader(path)
+vec_size = 0
+for i in reader.framelist:
+    vec_size += reader.bo[i][1][5]
+
+b_data = np.zeros((vec_size,), dtype='float32')
+b_indices = np.zeros((vec_size,), dtype='int32')
+b_indptr = np.zeros((len(iter_var)+1), dtype='int64')
+
+def read_in(q, e, i):
+    a = reader[i]
+    lsize = a.data.shape[0]
+    b_data[q:q+lsize] = a.data
+    b_indices[q:q+lsize] = a.indices
+    b_indptr[e+1] = b_indptr[e]+a.indptr[1]
+
+    return q+lsize
+
+q = 0
+for e, i in enumerate(iter_var):
+    q = read_in(q, e, i)
+    
+    if e%1_000 == 0: # Print out
+        print(np.round(e/len(iter_var)*100, 2), '% in', np.round(t.time()-tic), 's', end='\r')
+
+b_data = b_data[:q]
+b_indices = b_indices[:q]
+
+B = scis.csc_matrix((b_data, b_indices, b_indptr), copy=False)
+```
+
 
 ## Download and Installing Package
 % Under construction %
