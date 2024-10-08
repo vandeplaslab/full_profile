@@ -161,10 +161,9 @@ This line creates an instance of the FPC (likely "Fixed Point Continuation") cla
 - ```method='scipy_gesdd'```: Specifies the underlying svd method as 'scipy_gesdd' (multiple available see UniPy package)
 - ```dense=True```: Sets the dense flag to True if enough memory is available to reconstruct B into dense memory (a True statement speeds up the calculations)
 - ```verbose=True```: Enables verbose output
-- 
 
-### DFC
-% Under construction %
+
+### DFC % Under construction %
 ```Python
 from full_profile import dfc
 inst = dfc.dfc(maxiter=100, tau_factor=1e-3, delta=1.4, method='arpack', verbose=True)
