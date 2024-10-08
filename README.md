@@ -84,7 +84,7 @@ B = scis.csc_matrix((b_data, b_indices, b_indptr), copy=False)
 
 
 ## Download and Installing Package
-Get the latest package version, e.g. through GitHub CLI (https://cli.github.com/)
+This package depends heavily on [https://github.com/vandeplaslab/unipy](UniPy) make sure to install Unipy before this package. Then, get the latest package version of full_profile, e.g. through GitHub CLI (https://cli.github.com/)
 ```
 gh repo clone vandeplaslab/full_profile
 ```
