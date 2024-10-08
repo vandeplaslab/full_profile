@@ -46,5 +46,13 @@ B = scis.csc_matrix(out, dtype='float32', copy=False)
 ```
 
 ## Applying Methods
-- Include preprocessing (5%-95% TIC normalization)
-- Examples on how to apply
+### 5-95% Total Ion Current Count Normalization
+
+### SVT
+- Example
+
+### FPC
+- Example
+
+### DFC
+- Example
