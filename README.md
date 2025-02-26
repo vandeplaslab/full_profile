@@ -134,41 +134,46 @@ B *= C_sp # Apply normalization
 Example of how to apply singular value thresholding algorithm.
 ```Python
 from full_profile import svt
-inst = svt.svt(maxiter=100, tau_factor=1e-2, delta=1, method='scipy_gesdd', dense=True, verbose=True)
+inst = svt.SVT(maxiter=100, tau_factor=1e-2, delta=1, method='scipy_gesdd', dense=True, verbose=True)
 inst.run(B)
 ```
 
-This line creates an instance of the SVT (likely "Singular Value Thresholding") class with the following parameters:
-
+This line creates an instance of the SVT ("Singular Value Thresholding") class with the following parameters:
 - ```maxiter=100```: First positional argument is the maximal number of iterations 
 - ```tau_factor=1e-2```: Sets the tau factor to 0.01 (see Supplementary Materials)
 - ```delta=1```: Sets delta, i.e. step size, to 1 (see Supplementary Materials)
 - ```method='scipy_gesdd'```: Specifies the underlying svd method as 'scipy_gesdd' (multiple available see UniPy package)
-- ```dense=True```: Sets the dense flag to True if enough memory is available to reconstruct B into dense memory (a True statement speeds up the calculations)
+- ```dense=True```: Sets the dense flag to True if enough memory is available to reconstruct B into dense memory (a True statement speeds up the calculations if enough memory is available)
 - ```verbose=True```: Enables verbose output
 
 ### FPC
 Example of how to apply the fixed point continuation algorithm.
 ```Python
 from full_profile import fpc
-inst = fpc.fpc(maxiter=100, tau_factor=1e-3, delta=1.4, method='arpack', verbose=True)
+inst = fpc.FPC(maxiter=100, tau_factor=1e-3, delta=1.4, method='arpack', verbose=True)
 inst.run(B)
 ```
-This line creates an instance of the FPC (likely "Fixed Point Continuation") class with the following parameters:
+This line creates an instance of the FPC ("Fixed Point Continuation") class with the following parameters:
 - ```maxiter=100```: First positional argument is the maximal number of iterations 
-- ```tau_factor=1e-2```: Sets the tau factor to 0.01 (see Supplementary Materials)
-- ```delta=1```: Sets delta, i.e. step size, to 1 (see Supplementary Materials)
-- ```method='scipy_gesdd'```: Specifies the underlying svd method as 'scipy_gesdd' (multiple available see UniPy package)
-- ```dense=True```: Sets the dense flag to True if enough memory is available to reconstruct B into dense memory (a True statement speeds up the calculations)
+- ```tau_factor=1e-2```: Sets the tau factor to 0.001 (see Supplementary Materials)
+- ```delta=1```: Sets delta, i.e. step size, to 1.4 (see Supplementary Materials)
+- ```method='scipy_gesdd'```: Specifies the underlying svd method as 'arpack' (multiple available see UniPy package)
+- ```dense=True```: Sets the dense flag to True if enough memory is available to reconstruct B into dense memory (a True statement speeds up the calculations if enough memory is available)
 - ```verbose=True```: Enables verbose output
 
 
-### DFC % Under construction %
+### DFC
 ```Python
 from full_profile import dfc
-inst = dfc.dfc(maxiter=100, tau_factor=1e-3, delta=1.4, method='arpack', verbose=True)
-inst.run(B)
+from pyspa import SPAReader
+reader = SPAReader(path_fticr)
+selection = reader.framelist
+C = np.ones_like(selection)
+inst_svt = svt.SVT(10, .01, 1.4, method='sparse_arpack', dense=True, verbose=False)
+inst = dfc.DFC(reader, selection, inst_svt, C)
+inst.divide()
+inst.factor()
+inst.combine()
 ```
+This line creates an instance of the DFC with underlying SVT ("Divide-Factor-Combine") class. SVT or FPC can be used and their corresponding parameters can be used. Divide and Combine have individual parameters that can be set, to define the sampling size, oversampling factor for the projection and the rank oversampling.
 
-## Latest News
-2024/10/04: we are working hard to make UniPy available along with the DFC implementation

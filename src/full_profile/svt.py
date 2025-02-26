@@ -174,28 +174,30 @@ class SVT:
     def soft_thresholding(self) -> None:
         """Update b by performing truncated svd."""
         if "method" in self.kwargs:
-            sv = self._sv + 10 if linalg.requires_sv(self.kwargs["method"]) is True else 0
+            sv = self._sv + 10 if linalg.requires_sv(self.kwargs["method"]) is True else self._sv
             if self.k > 0:
                 if self.kwargs["method"] == "sparse_propack":
-                    self.kwargs.update(
-                        {"v0": (self._b[2][[0], :].todense())[0, :] if sum(self._b[1].data) > 1e-2 else None}
-                    )
+                    self.kwargs.update({
+                        "v0": np.asarray((self._b[2][[0], :].todense())).
+                                ravel() if sum(self._b[1].data) > 1e-2 else None
+                    })
                 else:
                     if self._b[0].shape[0] < self._b[2].shape[1]:
-                        self.kwargs.update(
-                            {"v0": (self._b[0][:, [0]].todense())[:, 0] if sum(self._b[1].data) > 1e-2 else None}
-                        )
+                        self.kwargs.update({
+                            "v0": np.asarray((self._b[0][:, [0]].todense())).
+                                    ravel() if sum(self._b[1].data) > 1e-2 else None
+                        })
                     else:
-                        self.kwargs.update(
-                            {"v0": (self._b[2][[0], :].todense())[0, :] if sum(self._b[1].data) > 1e-2 else None}
-                        )
-
+                        self.kwargs.update({
+                            "v0": np.asarray((self._b[2][[0], :].todense())).
+                                    ravel() if sum(self._b[1].data) > 1e-2 else None
+                        })
         else:
-            sv = 0
-
-        self.kwargs.update({"sv": sv})
-        self.kwargs.update({"sv": sv})
-
+            # Set a default valid value for sv (e.g., self._sv, which is set to 10 in initialize)
+            sv = self._sv
+        print(np.min([sv, self._m-1, self._n-1]))
+        self.kwargs.update({"sv": np.min([sv, self._m-1, self._n-1])})
+        # (Note: The update is done twice in the original; one update is enough)
         self.b = linalg.svd(self.y, self.kwargs)
         self._svp = int(sum(self._b[1].data > self.tau))
         if self._svp != 0:
@@ -203,6 +205,8 @@ class SVT:
         else:  # if svp is 0, just reset the svd result
             self._initialize_b()
         return None
+
+
 
     def _threshold(self, num: int = 1, value: float = 0.0) -> None:
         """Threshold b to certain value.
