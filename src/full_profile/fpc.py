@@ -176,20 +176,20 @@ class fpc:
             sv = (
                 self._sv + 10 if linalg.requires_sv(self.kwargs["method"]) is True else 0
             )
-            if self.k > 0:
-                if self.kwargs["method"] == 'sparse_propack':
-                    self.kwargs.update(
-                        {"v0": self._b[2][0,:] if sum(self._b[1]) > 1e-2 else None}
-                    )
-                else:
-                    if self._b[0].shape[0] < self._b[2].shape[1]:
-                        self.kwargs.update(
-                            {"v0": self._b[0][:,0] if sum(self._b[1]) > 1e-2 else None}
-                        )
-                    else:
-                        self.kwargs.update(
-                            {"v0": self._b[2][0,:] if sum(self._b[1]) > 1e-2 else None}
-                        )               
+            # if self.k > 0:
+            #     if self.kwargs["method"] == 'sparse_propack':
+            #         self.kwargs.update(
+            #             {"v0": self._b[2][0,:] if sum(self._b[1]) > 1e-2 else None}
+            #         )
+            #     else:
+            #         if self._b[0].shape[0] < self._b[2].shape[1]:
+            #             self.kwargs.update(
+            #                 {"v0": self._b[0][:,0] if sum(self._b[1]) > 1e-2 else None}
+            #             )
+            #         else:
+            #             self.kwargs.update(
+            #                 {"v0": self._b[2][0,:] if sum(self._b[1]) > 1e-2 else None}
+            #             )               
 
         else:
             sv = 0
