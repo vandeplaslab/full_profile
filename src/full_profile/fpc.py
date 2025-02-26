@@ -73,7 +73,6 @@ class FPC:
             Tuple containing arrays of svd to set b
 
         """
-        # print(type(self._b[1]))
         self._b[0] = a[0]
         self._b[1] = a[1]
         self._b[2] = a[2]
@@ -123,22 +122,15 @@ class FPC:
         self._ss = ss if find_package(self.a)[1] == "numpy" or find_package(self.a)[1] == "scipy.sparse" else cpss
 
         self._initialize_b()
-
-        # self.y = self._ss.csc_matrix((np.zeros_like(self.a.data), self.a.indices, self.a.indptr))
-        # make Y a dense matrix
         self.y = zeros((self._m, self._n), atype=self.btype, dtype=self.datatype)
-
-        # zeros((self._m, self._n), atype=self.atype, dtype=self.datatype)
         self.x_sparse = self._ss.csc_matrix(
             (np.zeros_like(self.a.data), self.a.indices, self.a.indptr), shape=(self._m, self._n)
         )
-        # zeros((self._m, self._n), atype=self.atype, dtype=self.datatype)
         self.tau = self.tau_factor * max(self.a.shape)
         self.a_fro = linalg.norm(self.a.data, 2)
         self.k0 = 1
         self.k = 0
         self._sv = 10  # set sv
-        # print('Initialization', time.time() - tic)
         return None
 
     def stopping_criterion(self) -> bool:
@@ -184,27 +176,7 @@ class FPC:
 
     def soft_thresholding(self) -> None:
         """Update b by performing truncated svd."""
-        # print('\n Soft Threshold\n')
         if "method" in self.kwargs:
-<<<<<<< HEAD
-            sv = (
-                self._sv + 10 if linalg.requires_sv(self.kwargs["method"]) is True else 0
-            )
-            # if self.k > 0:
-            #     if self.kwargs["method"] == 'sparse_propack':
-            #         self.kwargs.update(
-            #             {"v0": self._b[2][0,:] if sum(self._b[1]) > 1e-2 else None}
-            #         )
-            #     else:
-            #         if self._b[0].shape[0] < self._b[2].shape[1]:
-            #             self.kwargs.update(
-            #                 {"v0": self._b[0][:,0] if sum(self._b[1]) > 1e-2 else None}
-            #             )
-            #         else:
-            #             self.kwargs.update(
-            #                 {"v0": self._b[2][0,:] if sum(self._b[1]) > 1e-2 else None}
-            #             )               
-=======
             sv = self._sv + 10 if linalg.requires_sv(self.kwargs["method"]) is True else 0
             if self.k > 0:
                 if self.kwargs["method"] == "sparse_propack":
@@ -214,15 +186,12 @@ class FPC:
                         self.kwargs.update({"v0": self._b[0][:, 0] if sum(self._b[1]) > 1e-2 else None})
                     else:
                         self.kwargs.update({"v0": self._b[2][0, :] if sum(self._b[1]) > 1e-2 else None})
->>>>>>> 5e79b42fa4b02d5ff9be9eb6b38bc144db664a6f
-
         else:
             sv = 0
 
         self.kwargs.update({"sv": sv})
 
         self.b = linalg.svd(self.y, self.kwargs)
-        # print(type(self._b[0]), self._b[1])#, self._b[1])
         self._svp = int(sum(self._b[1] > self.tau))
         if self._svp != 0:
             self._threshold(self._svp, self.tau)
@@ -258,14 +227,6 @@ class FPC:
             self._sv = int(min(self._svp + 10, n))
 
     def update_x_sparse(self) -> None:
-        # self.x_sparse.data = np.einsum(
-        #     'ij,jj,ji->i',
-        #     self._b[0][self.a.row,:],
-        #     self._b[1],
-        #     self._b[2][:, self.a.col],
-        # optimize='greedy')
-
-        # self.x_sparse.data = sum((to_arraytype(self._b[0], self.btype)[self.x_sparse.row,:]*to_arraytype(self._b[1], self.btype))*to_arraytype((self._b[2]).T, self.btype)[self.x_sparse.col,:], axis=1)
         u = to_arraytype(self._b[0], self.btype) * to_arraytype(self._b[1], self.btype)
         v = to_arraytype(self._b[2], self.btype)
 
@@ -278,8 +239,6 @@ class FPC:
             self.x_sparse.data[self.x_sparse.indptr[i] : self.x_sparse.indptr[i + 1]] = (
                 uv[row, col] if self.dense else u[row, :] @ v[:, col]
             )
-
-        # self.x_sparse.data = sum((to_arraytype(self._b[0], self.btype)[self.x_sparse.row,:]*to_arraytype(self._b[1], self.btype))*to_arraytype((self._b[2]).T, self.btype)[self.x_sparse.col,:], axis=1)
 
         return None
 
@@ -295,7 +254,6 @@ class FPC:
         -------
         None
         """
-        # print(self.y.shape, self.b.shape, self.a.shape, self.x_sparse.shape)
         self.y = self.b + self.delta * (self.a - self.x_sparse)
 
     def update_delta(self):
