@@ -1,4 +1,5 @@
-"""Full-Profile Analysis"""
+"""Full-Profile Analysis."""
+
 from importlib.metadata import PackageNotFoundError, version
 
 try:

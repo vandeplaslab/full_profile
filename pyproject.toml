@@ -28,7 +28,14 @@ classifiers = [
     "Typing :: Typed",
 ]
 dynamic = ["version"]
-dependencies = []
+dependencies = [
+    "numpy<2",
+    "scipy",
+    "joblib",
+    "tqdm"
+    # cupyx
+    # unipy
+]
 
 # extras
 # https://peps.python.org/pep-0621/#dependencies-optional-dependencies
@@ -73,7 +80,9 @@ include = '\.pyi?$'
 line-length = 120
 target-version = "py38"
 src = ["src"]
+
 # https://beta.ruff.rs/docs/rules/
+[tool.ruff.lint]
 extend-select = [
     "E",    # style errors
     "W",    # style warnings
@@ -103,7 +112,7 @@ extend-ignore = [
     "D416", # Section name should end with a colon
 ]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "tests/*.py" = ["D", "S"]
 "setup.py" = ["D"]
 
